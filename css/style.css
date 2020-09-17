@@ -1,0 +1,158 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	text-decoration: none !important;
+}
+
+body, html {
+	background-color: #f2f2f2;
+	height: 100%;
+}
+
+main {
+	margin: 30px 30px 30px 30px;
+}
+/*index.php*/
+.parallax {
+    /* The image used */
+    background-image: url("../img/bg.jpg");
+
+    /* Set a specific height */
+    min-height: 500px; 
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.index-head {
+	margin-top: 60px;
+	text-align: center;
+}
+
+.index-body {
+	margin-top: 120px;
+	text-align: center;
+}
+
+.btn-outline-info {
+	padding: 20px 60px 20px 60px;
+	font-weight: bold;
+}
+
+.index-detail {
+	margin-top: 120px;
+}
+/*login.php*/
+.login-wrapper {
+	background-color: white;
+	padding-top: 20px; 
+	padding-bottom: 20px;
+	width: 100%;
+}
+/*view.php*/
+.profile {
+	border-radius: 50%;
+	width: 50px;
+	height: 50px;
+}
+
+.requests {
+	cursor: pointer;
+}
+.requests:hover {
+	filter: brightness(80%);
+}
+
+.req-img {
+	width: 350px;
+	height: 250px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+.detail {
+	padding-left: 10px;
+	background-color: white;
+	width: 350px;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+.req-btn {
+	display: inline-block;
+	width: 60px; 
+    height: 60px; 
+    padding: 7px 10px; 
+    border-radius: 35px; 
+    font-size: 12px; 
+    text-align: center;
+    left: 84%;
+    bottom: 3%;
+}
+
+#report-btn {
+	visibility: visible;
+}
+
+#report-div {
+	display: none;
+}
+
+.reqFormName {
+	width: 100px;
+}
+
+.red {
+	color: red;
+}
+/*profile.php*/
+.profile-pic {
+	border-radius: 50%;
+	width: 200px;
+	height: 200px;
+}
+
+.profileForm {
+	width: 100px;
+}
+
+.req-icon {
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+}
+/*myRequests.php*/
+.myReq-img {
+	height: 250px;
+	width: 350px;
+	border-radius: 10px;
+}
+
+.myReq-detail {
+	width: 350px;
+	background-color: white;
+}
+
+@media only screen and (min-width: 768px) {
+	.req-btn {
+	    left: 90%;
+	}
+	.login-wrapper {
+		width: 80%;
+	}
+}
+
+@media only screen and (min-width: 1200px) {
+	.req-btn {
+		left: 94%;
+	}
+	.login-wrapper {
+		width: 50%;
+	}
+}
