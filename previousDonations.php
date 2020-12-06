@@ -1,3 +1,12 @@
+<?php 
+  include 'config.php';
+  if (!isset($_SESSION['auth'])){
+    $_SESSION['previous'] = 'previousDonations.php';
+    header("location:login.php");
+  }
+  
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -13,53 +22,62 @@
   </head>
   <body>
   <?php include "navi.php"; ?>
+  <?php include "Time.php"; ?>
+
+  <?php
+    $sql = "SELECT r.* FROM request r,donate d,user u WHERE u.id=d.ID2 AND d.RID=r.RID AND r.RFinish=1 AND u.username='".$username."'";
+    $result = $conn->query($sql);
+    $n = [];
+     if($result->num_rows > 0){
+      $n = $result->fetch_assoc();
+    }
+
+   ?>
   <br><br>
     <main>
       <div class="row mt-5">
         <div class="col text-center">
           <h2 class="headline">PREVIOUS DONATIONS</h2>
-          <h5 class="sub-headline">You have already donated [?] times!</h5>
+          <h5 class="sub-headline">You have already donated <?php echo count($n);?> times!</h5>
         </div>
       </div>
       <div class="row mt-5">
+         <?php
+       $sql = "SELECT r.* FROM request r,donate d,user u WHERE u.id=d.ID2 AND d.RID=r.RID AND r.RFinish=1 AND u.username='".$username."'";
+    $r = $conn->query($sql);
+        if($r->num_rows > 0){
+            $row = $r->fetch_assoc();
+        ?>
         <div class="col-12 col-lg-4 mb-5">
           <div class="card">
             <div class="card-header d-flex justify-content-between">
-              <div><a href="info.php"><img src="img/man2.png" class="profile" alt="profile">
-              <span>NAME NAME NAME</span></a></div>
-              <div class="my-auto text-muted">1day ago</div>
+              <div><a href="info.php?RID=<?php echo $row['RID']; ?>"><img src="img/man2.png" class="profile" alt="profile">
+              <span><?php echo $username; ?></span></a></div>
+              <div class="my-auto text-muted">
+              <?php $phpdate = strtotime($row["RTime"]);
+                     $mysqldate = date( 'Y-m-d H:i:s',$phpdate);
+                     echo time_elapsed_string($mysqldate);?>
+              
+              </div>
             </div>
             <div class="card-body mx-auto">   
               <div class="text-center mb-2">
                 <img src="img/item2.jpg" alt="item" class="myReq-img img-fluid">
               </div>
-              <p>Item Name<br>
-                Quantity<br>
-                Locaiton<br>
-                Donated Date<br>
-                Purpose</p>
+              <p><?php echo 'Item Name:'.$row['RName'].'<br>
+                Quantity:'.$row['RQuantity'].'<br>
+                Locaiton:'.$row['RLocation'].'<br>
+                Last Date:'.$row['RDate'].'<br>
+                Purpose:'.$row['RPurpose']; ?></p>
             </div>
           </div>
         </div>
-        <div class="col-12 col-lg-4 mb-5">
-          <div class="card">
-            <div class="card-header d-flex justify-content-between">
-              <div><a href="info.php"><img src="img/man2.png" class="profile" alt="profile">
-              <span>NAME NAME NAME</span></a></div>
-              <div class="my-auto text-muted">2days ago</div>
-            </div>
-            <div class="card-body mx-auto">   
-              <div class="text-center mb-2">
-                <img src="img/item2.jpg" alt="item" class="myReq-img img-fluid">
-              </div>
-              <p>Item Name<br>
-                Quantity<br>
-                Purpose<br>
-                Donated Date<br>
-                Purpose</p>
-            </div>
-          </div>
-        </div>
+        <?php 
+      }else{
+          echo '<h5>No Data</h5>';
+        }
+        ?>
+        
       </div>
     </main>
   <?php include "footer.php"; ?>
@@ -71,3 +89,6 @@
     
   </body>
 </html>
+<?php
+$conn->close();
+?>

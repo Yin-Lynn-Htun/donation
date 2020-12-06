@@ -1,3 +1,11 @@
+<?php 
+  include 'config.php';
+  if (!isset($_SESSION['auth'])){
+    $_SESSION['previous'] = 'notifications.php';
+    header("location:login.php");
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -21,36 +29,53 @@
         </div>
       </div>
       <div class="row mt-5">
-        <div class="col-10 mx-auto">
-          <small>Date: DD/MM/YYYY</small>
+
+
+      <?php
+
+      $uid = $_SESSION['uid'];
+      $sql = "SELECT * FROM `log` WHERE uid = $uid";
+      $result = $conn->query($sql);
+          if($result ->num_rows > 0){
+            while($row = mysqli_fetch_array($result)){
+
+        echo '
+        <div class="col-10 mx-auto"> 
+          <small>Date: '. $row['date'] .'</small>
+          ';
+
+          if ($row['type'] == 'expire'){
+            $temp = $row['time'] + ' UTC';
+            $time = date("g:i a", strtotime($temp));
+            echo'
           <div class="alert alert-dark" role="alert">
-            <small class="d-flex justify-content-end">Time: 12:00AM</small>
-            Your request <a href="#" class="alert-link">[item]</a> has expired.
-          </div>
+            <small class="d-flex justify-content-end">Time: '. $time. '</small>
+            Your request <a href="#" class="alert-link">'.$row['itemname'].'</a> has expired.
+          </div>'
+          ;
+        }
+        elseif ($row['type'] == 'donate') {
+          echo'
           <div class="alert alert-success" role="alert">
             <small class="d-flex justify-content-end">Time: 12:00AM</small>
-            <a href="#" class="alert-link">[Name]</a> donated <a href="#" class="alert-link">[item]</a> to you!
-          </div>
+            <a href="#" class="alert-link">'.$row['donor'].'</a> donated <a href="#" class="alert-link">'.$row['itemname'].'</a> to you!
+          </div>';
+        }
+        elseif($row['type'] == 'cancel'){
+          echo'
           <div class="alert alert-danger" role="alert">
             <small class="d-flex justify-content-end">Time: 12:00AM</small>
-            <a href="#" class="alert-link">[Name]</a> cancelled your donation.
+            <a href="#" class="alert-link">'.$row['donor'].'</a> cancelled your donation.
           </div>
-        </div>
-        <div class="col-10 mx-auto">
-          <small>Date: DD/MM/YYYY</small>
-          <div class="alert alert-dark" role="alert">
-            <small class="d-flex justify-content-end">Time: 12:00AM</small>
-            Your request <a href="#" class="alert-link">[item]</a> has expired.
-          </div>
-          <div class="alert alert-success" role="alert">
-            <small class="d-flex justify-content-end">Time: 12:00AM</small>
-            <a href="#" class="alert-link">[Name]</a> donated <a href="#" class="alert-link">[item]</a> to you!
-          </div>
-          <div class="alert alert-danger" role="alert">
-            <small class="d-flex justify-content-end">Time: 12:00AM</small>
-            <a href="#" class="alert-link">[Name]</a> cancelled your donation.
-          </div>
-        </div>
+        ';
+        }
+        echo '</div>';
+          
+      }
+    }
+      ?>
+
+
       </div>
     </main>
   <?php include "footer.php"; ?>

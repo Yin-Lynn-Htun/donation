@@ -1,3 +1,23 @@
+<?php 
+  include 'config.php';
+  if (!isset($_SESSION['auth'])){
+    $_SESSION['previous'] = 'myRequests.php';
+    header("location:login.php");
+  }
+?>
+
+<!-- <script type="text/javascript">location.reload();</script>
+ --><!-- <?php 
+$conn = new mysqli("localhost","root","","donation");
+
+if($conn->connect_error){
+die("connection failed: ".$conn->connect_error);
+}
+
+
+?> -->
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -13,6 +33,7 @@
   </head>
   <body>
   <?php include "navi.php"; ?>
+  <?php include "Time.php"; ?>
   <br><br>
     <main>
       <div class="row mt-5">
@@ -21,52 +42,75 @@
         </div>
       </div>
       <div class="row mt-5">
+        
+        <?php
+        $sql = "SELECT * FROM request WHERE ReqPerson='".$username."'";  //add user id
+        $result = $conn->query($sql);
+        if($result->num_rows > 0){
+            while($row = $result->fetch_assoc()){
+            
+        ?>
+
         <div class="col-12 col-lg-4 d-flex justify-content-center mb-5">
           <div class="card">
             <div class="card-header text-right text-muted">
-              <small>2 days ago</small>
+              <small>
+                <?php $phpdate = strtotime($row["RTime"]);
+                     $mysqldate = date( 'Y-m-d H:i:s',$phpdate);
+                     echo time_elapsed_string($mysqldate);?>
+              </small>
             </div>
             <div class="card-body">
               <div class="text-center mb-2">
-                <img src="img/item1.png" alt="item" class="myReq-img img-fluid">
+                           
+                <img src="img/item1.png" alt="item" class="myReq-img img-fluid">  
               </div>
-              <p>Item Name<br>
-                Quantity<br>
-                Locaiton<br>
-                Last Date<br>
-                Purpose</p>
+              <p><?php echo 'Item Name:'.$row['RName'].'<br>
+                Quantity:'.$row['RQuantity'].'<br>
+                Locaiton:'.$row['RLocation'].'<br>
+                Last Date:'.$row['RDate'].'<br>
+                Purpose:'.$row['RPurpose']; ?></p>
             </div>
-            <div class="card-footer text-right">
-              <button type="button" class="btn btn-danger">DELETE</button>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-lg-4 d-flex justify-content-center mb-5">
-          <div class="card">
-            <div class="card-header text-right text-muted">
-              <small>4 days ago</small>
-            </div>
-            <div class="card-body">
-              <div class="text-center mb-2">
-                <img src="img/item2.jpg" alt="item" class="myReq-img img-fluid">
-              </div>
-              <p>Item Name<br>
-                Quantity<br>
-                Locaiton<br>
-                Last Date<br>
-                Purpose</p>
-            </div>
+            <?php
+            $sql2 = "SELECT * FROM donate WHERE RID = '".$row['RID']."'";
+            $result2 = $conn->query($sql2);
+            if($result2->num_rows > 0){
+                  while($row2 = $result2->fetch_assoc()){
+                
+            ?>
             <div class="card-footer d-flex justify-content-between">
               <div class="my-auto">
-                <a href="info.php"><b>Donator Found!</b></a>
+                <a href="info.php?ID=<?php echo $row2['ID2']; ?>"><b>Donator Found!</b></a>
               </div>
               <div class="d-flex">
-                <button type="button" class="btn btn-danger mr-1">REJECT</button>
-                <button type="button" class="btn btn-success">RECEIVED!</button>
+                <a href="RejectReceive.php?n=1&RID=<?php echo $row2['RID']; ?>"><button type="button" class="btn btn-danger mr-1">REJECT</button></a>
+                <a href="ejectReceive.php?n=0&RID=<?php echo $row2['RID']; ?>"><button type="button" class="btn btn-success">RECEIVED!</button></a>
               </div>
             </div>
+            <?php
+
+                
+              }
+            
+              }else{
+            ?>
+
+            <div class="card-footer text-right">
+              <a href="delete.php?RID=<?php echo $row['RID']; ?>"><button type="button" class="btn btn-danger">DELETE</button></a>
+            </div>
+            <?php 
+              }
+             ?>
           </div>
         </div>
+
+        <?php 
+          }
+        }else{
+              echo "no result";
+          }
+        ?>
+
       </div>
     </main>
   <?php include "footer.php"; ?>
@@ -78,3 +122,7 @@
     
   </body>
 </html>
+
+<!-- <?php 
+$conn->close();
+?> -->

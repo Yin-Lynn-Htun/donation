@@ -1,3 +1,12 @@
+<?php 
+  include 'config.php';
+  if (!isset($_SESSION['auth'])){
+    $_SESSION['previous'] = 'pendingDonations.php';
+    header("location:login.php");
+  }
+
+  
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -13,6 +22,14 @@
   </head>
   <body>
   <?php include "navi.php"; ?>
+  <?php include "Time.php"; ?>
+
+
+  <?php
+    $sql = "SELECT r.* FROM request r,donate d,user u WHERE u.id=d.ID2 AND d.RID=r.RID AND r.RFinish=0 AND u.username='".$username."'"; //user id
+    $result = $conn->query($sql);
+
+   ?>
   <br><br>
     <main>
       <div class="row mt-5">
@@ -22,57 +39,58 @@
         </div>
       </div>
       <div class="row mt-5">
+
+        <?php 
+          if($result ->num_rows > 0){
+            $row = $result->fetch_assoc();
+            
+        ?>
+
         <div class="col-12 col-lg-4 mb-5">
           <div class="card">
             <div class="card-header d-flex justify-content-between">
-              <div><a href="info.php"><img src="img/man2.png" class="profile" alt="profile">
-              <span>NAME NAME NAME</span></a></div>
-              <div class="my-auto text-muted">3hrs ago</div>
+              <div><a href="info.php?RID=<?php echo $row['RID']; ?>"><img src="img/man2.png" class="profile" alt="profile">
+              <span><?php echo $username; ?></span></a></div>
+              <div class="my-auto text-muted">
+              <?php $phpdate = strtotime($row["RTime"]);
+                     $mysqldate = date( 'Y-m-d H:i:s',$phpdate);
+                     echo time_elapsed_string($mysqldate);
+                     
+                     ?>
+              </div>
             </div>
             <div class="card-body mx-auto">   
               <div class="text-center mb-2">
+                <!-- <img src="<?php echo $RPhoto; ?>" alt="item" class="myReq-img img-fluid">-->
                 <img src="img/item1.png" alt="item" class="myReq-img img-fluid">
               </div>
-              <p>Item Name<br>
-                Quantity<br>
-                Locaiton<br>
-                Last Date<br>
-                Purpose</p>
+              <p><?php echo 'Item Name:'.$row['RName'].'<br>
+                Quantity:'.$row['RQuantity'].'<br>
+                Locaiton:'.$row['RLocation'].'<br>
+                Last Date:'.$row['RDate'].'<br>
+                Purpose:'.$row['RPurpose']; ?></p>
             </div>
             <div class="card-footer d-flex justify-content-between">
               <div>
-                <button type="button" class="btn btn-danger">CANCEL</button>
+                <?php
+                if(time_diff($mysqldate)){
+
+                 ?>
+                <a href="delete2.php?RID=<?php echo $row['RID']; ?>"><button type="button" class="btn btn-danger">CANCEL</button></a>
+                <?php }?>
               </div>
               <div>
-                <button type="button" class="btn btn-success">FINISH</button>
+                <a href="finish.php?RID=<?php echo $row['RID']; ?>"><button type="button" class="btn btn-success">FINISH</button></a>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-12 col-lg-4 mb-5">
-          <div class="card">
-            <div class="card-header d-flex justify-content-between">
-              <div><a href="info.php"><img src="img/man2.png" class="profile" alt="profile">
-              <span>NAME NAME NAME</span></a></div>
-              <div class="my-auto text-muted">28hrs ago</div>
-            </div>
-            <div class="card-body mx-auto">   
-              <div class="text-center mb-2">
-                <img src="img/item1.png" alt="item" class="myReq-img img-fluid">
-              </div>
-              <p>Item Name<br>
-                Quantity<br>
-                Locaiton<br>
-                Last Date<br>
-                Purpose</p>
-            </div>
-            <div class="card-footer d-flex justify-content-end">
-              <div>
-                <button type="button" class="btn btn-success">FINISH</button>
-              </div>
-            </div>
-          </div>
-        </div>
+
+        <?php 
+      }else{
+          echo '<h5>No Data</h5>';
+        }
+        ?>
       </div>
     </main>
   <?php include "footer.php"; ?>
@@ -84,3 +102,7 @@
     
   </body>
 </html>
+
+<?php
+  $conn->close();
+?>

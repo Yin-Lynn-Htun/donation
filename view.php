@@ -1,3 +1,7 @@
+<?php
+include 'config.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -21,7 +25,18 @@
         </div>
       </div>
       <div class="row mt-4">
-        <div class="col-12 col-md-6 col-lg-4 mb-5 mx-auto requests" data-toggle="modal" data-target="#requestItemInfoModal">
+
+        <?php
+          $sql = "SELECT * FROM request WHERE RFinish=0 AND expired = 0";
+          $result = $conn->query($sql);
+          if($result ->num_rows > 0){
+            while($row = mysqli_fetch_array($result)){
+            
+
+        
+         echo'
+        <div class="col-12 col-md-6 col-lg-4 mb-5 mx-auto requests" data-toggle="modal" data-target="#requestItemInfoModal" data-name="'.$row['ReqPerson'] .'" data-itemname="'.$row['RName'] .'"  data-quantity="'.$row['RQuantity'] .'" data-location="'.$row['RLocation'] .'" data-lastdate="'.$row['RDate'] .'" data-purpose="'.$row['RPurpose'] .'" data-rid="'.$row['RID'] .'" data-reqid="'.$row['ID'] .'" data-image="img/donate.jpg">';
+        ?>
           <div class="row">
             <div class="col d-flex justify-content-center">
               <img src="img/item1.png" class="req-img img-fluid">
@@ -29,135 +44,24 @@
           </div>
           <div class="row">
             <div class="col d-flex justify-content-center">
-              <p class="detail">Item: <br>
-              Location: <br>
-              Last Date: </p>
+              <p class="detail"><?php echo 'Item: '.$row['RName'] .'<br>
+              Location:'.$row['RLocation'].' <br>
+              Last Date:'.$row['RDate']; ?></p>
             </div>
           </div>
         </div>
+        <?php 
+        
+        }
+        }else{
+          echo "no result";
+        }
+        ?>
 
-        <div class="col-12 col-md-6 col-lg-4 mb-5 mx-auto requests" data-toggle="modal" data-target="#requestItemInfoModal">
-          <div class="row">
-            <div class="col d-flex justify-content-center">
-              <img src="img/item2.jpg" class="req-img img-fluid">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col d-flex justify-content-center">
-              <p class="detail">Item: <br>
-              Location: <br>
-              Last Date: </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-lg-4 mb-5 mx-auto requests" data-toggle="modal" data-target="#requestItemInfoModal">
-          <div class="row">
-            <div class="col d-flex justify-content-center">
-              <img src="img/item1.png" class="req-img img-fluid">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col d-flex justify-content-center">
-              <p class="detail">Item: <br>
-              Location: <br>
-              Last Date: </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-lg-4 mb-5 mx-auto requests" data-toggle="modal" data-target="#requestItemInfoModal">
-          <div class="row">
-            <div class="col d-flex justify-content-center">
-              <img src="img/item1.png" class="req-img img-fluid">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col d-flex justify-content-center">
-              <p class="detail">Item: <br>
-              Location: <br>
-              Last Date: </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-lg-4 mb-5 mx-auto requests" data-toggle="modal" data-target="#requestItemInfoModal">
-          <div class="row">
-            <div class="col d-flex justify-content-center">
-              <img src="img/item2.jpg" class="req-img img-fluid">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col d-flex justify-content-center">
-              <p class="detail">Item: <br>
-              Location: <br>
-              Last Date: </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-lg-4 mb-5 mx-auto requests" data-toggle="modal" data-target="#requestItemInfoModal">
-          <div class="row">
-            <div class="col d-flex justify-content-center">
-              <img src="img/item1.png" class="req-img img-fluid">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col d-flex justify-content-center">
-              <p class="detail">Item: <br>
-              Location: <br>
-              Last Date: </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-lg-4 mb-5 mx-auto requests" data-toggle="modal" data-target="#requestItemInfoModal">
-          <div class="row">
-            <div class="col d-flex justify-content-center">
-              <img src="img/item1.png" class="req-img img-fluid">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col d-flex justify-content-center">
-              <p class="detail">Item: <br>
-              Location: <br>
-              Last Date: </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-lg-4 mb-5 mx-auto requests" data-toggle="modal" data-target="#requestItemInfoModal">
-          <div class="row">
-            <div class="col d-flex justify-content-center">
-              <img src="img/item2.jpg" class="req-img img-fluid">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col d-flex justify-content-center">
-              <p class="detail">Item: <br>
-              Location: <br>
-              Last Date: </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-lg-4 mb-5 mx-auto requests" data-toggle="modal" data-target="#requestItemInfoModal">
-          <div class="row">
-            <div class="col d-flex justify-content-center">
-              <img src="img/item1.png" class="req-img img-fluid">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col d-flex justify-content-center">
-              <p class="detail">Item: <br>
-              Location: <br>
-              Last Date: </p>
-            </div>
-          </div>
-        </div>
-
+      
       </div>
       <!-- Modal -->
+
       <div class="modal fade" id="requestItemInfoModal" tabindex="-1" role="dialog" aria-labelledby="requestItemInfoModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
@@ -172,23 +76,23 @@
                 <div class="col">
                   <a href="info.php">
                     <img src="img/man2.png" class="profile" alt="profile">
-                      <span>NAME NAME NAME</span>
+                      <span id="name"></span>
                   </a>
                 </div>
               </div>
               <div class="row">
                 <div class="col-11 mx-auto">
-                  <img src="img/item1.png" class="img-fluid rounded">
+                  <img id="myimage" class="img-fluid rounded">
                 </div>
               </div>
               <div class="row mt-2">
                 <div class="col">
                   <p class="detail">
-                    <span>Item Name</span><br>
-                    <span>Quantity</span><br>
-                    <span>Location</span><br>
-                    <span>Last date</span><br>
-                    <span>Purpose</span>
+                    Item Name : <span id="itemname"></span><br>
+                    Quantity : <span id="quantity"></span><br>
+                    Location : <span id="location"></span><br>
+                    Last date : <span id="lastdate"></span><br>
+                    Purpose : <span id="purpose"></span>
                   </p>
                 </div>
               </div>
@@ -237,7 +141,7 @@
               </div>
               <div>
                 <button type="button" class="btn btn-secondary" id="close-btn" onclick="reset()" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success" id="donate-btn">DONATE</button>
+                <button type="button" class="btn btn-success" id="donate-btn" onclick="donate(<?php echo $_SESSION['uid']; ?>)">DONATE</button>
               </div>
             </div>
           </div>
@@ -245,6 +149,9 @@
       </div>
 
     <!-- Button trigger modal -->
+    <?php 
+      if(isset($_SESSION["auth"])){
+        echo'
     <button type="button" class="btn btn-primary req-btn fixed-bottom" data-toggle="modal" data-target="#requestButtonModal">
       REQ
     </button>
@@ -259,41 +166,59 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <form>
+          <form action="request.php" method="POST">
+          <input type="hidden" name="uid" value="'.$_SESSION['uid'].'">
+          <input type="hidden" name="uname" value="'.$_SESSION['uname'].'">
             <div class="modal-body">
               <div class="form-group row pl-3">
+
                 <label class="reqFormName" for="FormName">Item name<span class="red"> *</span></label>
-                <div class="col"><input type="text" class="form-control" id="FormName"></div>
+                <div class="col"><input type="text" class="form-control" id="FormName" name="RName"></div>
               </div>
               <div class="form-group row pl-3">
                 <label class="reqFormName" for="FormImage">Item image<span class="red"> *</span></label>
-                <div class="col"><input type="file" class="form-control-file" id="FormImage"></div>
+                <div class="col"><input type="file" class="form-control-file" id="FormImage" name="RPhoto"></div>
               </div>
-              <!-- <div class="form-group row pl-3">
+              <div class="form-group row pl-3">
                 <label class="reqFormName" for="FormLocation">Location<span class="red"> *</span></label>
-                <div class="col"><input type="text" class="form-control" id="FormLocation"></div>
-              </div> -->
+                <div class="col"><input type="text" class="form-control" id="FormLocation" name="RLocation"></div>
+              </div>
               <div class="form-group row pl-3">
                 <label class="reqFormName" for="FormQuantity">Quantity</label>
-                <div class="col"><input type="text" class="form-control" id="FormQuantity"></div>
+                <div class="col"><input type="text" class="form-control" id="FormQuantity" name="RQuantity"></div>
               </div>
               <div class="form-group row pl-3">
                 <label class="reqFormName" for="FormDate">Last date<span class="red"> *</span></label>
-                <div class="col"><input type="date" class="form-control" id="FormDate"></div>
+                <div class="col"><input type="date" class="form-control" id="FormDate" name="RDate"></div>
               </div>
               <div class="form-group row pl-3">
                 <label class="reqFormName" for="FormTextArea">Purpose<span class="red"> *</span></label>
-                <div class="col"><textarea class="form-control" id="FormTextArea" rows="3"></textarea></div>
+                <div class="col"><textarea class="form-control" id="FormTextArea" rows="3" name="RPurpose"></textarea></div>
               </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Done</button>
+              <input type="submit" class="btn btn-primary" value="Done">
             </div>
           </form>
         </div>
+        </div>
       </div>
     </div>
+    ';
+  } 
+  else{
+    $_SESSION['previous'] = 'view.php';
+     echo'
+     <a href ="login.php" >
+    <button type="button" class="btn btn-primary req-btn fixed-bottom" data-toggle="modal">
+      REQ
+    </button>
+    </a>';
+  }
+
+  ?>
+<input type="hidden" name="'.$.'">
 
     </main>
   <?php include "footer.php"; ?>
@@ -305,5 +230,78 @@
     
     <script type="text/javascript" src="js/report.js"></script>
     <script type="text/javascript" src="js/datepicker.js"></script>
+
+    <script type="text/javascript">
+    
+        function setCookie(cname,cvalue,exdays) {
+          var d = new Date();
+          d.setTime(d.getTime() + (exdays*24*60*60*1000));
+          var expires = "expires=" + d.toGMTString();
+          document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        function getCookie(cname) {
+          var name = cname + "=";
+          var decodedCookie = decodeURIComponent(document.cookie);
+          var ca = decodedCookie.split(';');
+          for(var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+              c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+              return c.substring(name.length, c.length);
+            }
+          }
+          return "";
+        }
+
+        function checkCookie() {
+          var user=getCookie("username");
+          if (user != "") {
+            alert("Welcome again " + user);
+          } else {
+             user = prompt("Please enter your name:","");
+             if (user != "" && user != null) {
+               setCookie("username", user, 30);
+             }
+          }
+        }
+
+        function donate(uid){
+          var rid = getCookie("rid");
+          var reqid = getCookie("reqid");
+          window.location.replace("donate.php?ReqPersonID="+ reqid +"&DonatePersonID=" + uid +"&RID="+ rid+"")
+        }
+
+      $('#requestItemInfoModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var name = button.data('name')
+        var itemname = button.data('itemname')
+        var quantity = button.data('quantity')
+        var location = button.data('location')
+        var lastdate = button.data('lastdate')
+        var purpose = button.data('purpose')
+        var image = button.data('image')
+        var reqid = button.data('reqid')
+        var rid = button.data('rid')
+
+        setCookie("reqid", reqid, 30);
+        setCookie("rid", rid, 30);
+
+        var modal = $(this)
+
+        modal.find('.modal-body #name').text(name)
+        modal.find('.modal-body #itemname').text(itemname)
+        modal.find('.modal-body #quantity').text(quantity)
+        modal.find('.modal-body #location').text(location)
+        modal.find('.modal-body #lastdate').text(lastdate)
+        modal.find('.modal-body #purpose').text(purpose)
+        modal.find('.modal-body #myimage').attr('src' , image)
+      })
+
+    </script>
+
+
   </body>
 </html>

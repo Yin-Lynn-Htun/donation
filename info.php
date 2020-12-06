@@ -1,3 +1,9 @@
+<?php 
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -25,24 +31,35 @@
           <img src="img/man2.png" alt="profile" class="profile-pic">
         </div>
         <div class="col-12 col-lg-7 ml-1 mb-5 my-auto">
+          <?php
+          $sql = "SELECT username,phoneNo,email,location FROM user WHERE id='".$_GET['RID']."'";
+          $result = $conn->query($sql);
+
+          if($result ->num_rows > 0){
+            $row = $result->fetch_assoc();
+            
+
+          ?>
           <div class="form-group row">
             <label class="profileForm" for="FormName">Name:</label>
-            <div class="col"><p>NAME</p></div>
+            <div class="col"><p><?php echo $row['username']; ?></p></div>
           </div>
           <div class="form-group row">
             <label class="profileForm" for="FormPhone">Phone:</label>
-            <div class="col"><p>PHONE NO</p></div>
+            <div class="col"><p><?php echo $row["phoneNo"]; ?></p></div>
           </div>
           <div class="form-group row">
             <label class="profileForm" for="FormEmail">Email:</label>
-            <div class="col"><p>EMAIL</p></div>
+            <div class="col"><p><?php echo $row['email']; ?></p></div>
           </div>
           <div class="form-group row">
             <label class="profileForm" for="FormLocation">Location:</label>
-            <div class="col"><p>LOCATION</p></div>
+            <div class="col"><p><?php echo $row['location']; ?></p></div>
           </div>
         </div>
       </div>
+      <?php 
+?>
       <div class="row">
         <div class="col-6 d-flex justify-content-center">
           <img src="img/req.jpg" class="req-icon mx-auto" alt="Request icon">
@@ -67,3 +84,10 @@
     
   </body>
 </html>
+
+<?php 
+}else{
+    echo "no result";
+  }
+$conn->close();
+?>

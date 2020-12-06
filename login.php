@@ -23,18 +23,18 @@
         </div>
         <div class="row mt-3">
           <div class="col-10 col-md-8 mx-auto">
-            <form action="view.php" method="POST">
+            <form action="login_.php" method="POST">
               <div class="form-group">
                 <label for="userName">UserName:</label>
-                <input type="text" class="form-control" id="userName" placeholder="Enter your UserName" name="">
+                <input type="text" class="form-control" id="userName" placeholder="Enter your UserName" name="username">
               </div>
               <div class="form-group">
                 <label for="userPassword">Password:</label>
-                <input type="password" class="form-control" id="userPassword" placeholder="Enter your Password" name="">
+                <input type="password" class="form-control" id="userPassword" placeholder="Enter your Password" name="password">
               </div>
               <div class="form-group d-flex justify-content-between">
                 <div><a href="signUp.php">Register</a></div>
-                <div><button type="button" class="btn btn-primary">Login</button></div>
+                <div><button type="submit" class="btn btn-primary">Login</button></div>
               </div>
             </form>
           </div>

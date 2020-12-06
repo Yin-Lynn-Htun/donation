@@ -23,33 +23,38 @@
         </div>
         <div class="row mt-3">
           <div class="col-10 col-md-8 mx-auto">
-            <form action="view.php" method="POST">
+            <form action="register.php" method="POST" enctype="multipart/form-data">
               <div class="form-group">
                 <label for="userName">UserName:</label>
-                <input type="text" class="form-control" id="userName" placeholder="Enter your UserName" name="">
+                <input type="text" class="form-control" id="userName" placeholder="Enter your UserName" name="username">
               </div>
               <div class="form-group">
-                <label for="userPicture">Profile picture:</label>
-                <input type="file" class="form-control-file" id="userPicture" name="">
+                <label for="photo">Profile picture:</label>
+                <input type="file" class="form-control-file" id="photo" name="photo" >
+              </div>
+              <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" class="form-control" id="email" placeholder="Enter your Email" name="email">
               </div>
               <div class="form-group">
                 <label for="userPhoneNumber">Phone Number:</label>
-                <input type="tel" class="form-control" id="userPhoneNumber" name="">
+                <input type="tel" class="form-control" id="userPhoneNumber" name="phoneNo">
               </div>
               <div class="form-group">
                 <label for="userLocation">Location:</label>
-                <textarea class="form-control" id="userLocation" placeholder="Enter your Location" name=""></textarea>
+                <textarea class="form-control" id="userLocation" placeholder="Enter your Location" name="location"></textarea>
               </div>
               <div class="form-group">
                 <label for="userPassword">Password:</label>
-                <input type="password" class="form-control" id="userPassword" placeholder="Enter your Password" name="">
+                <input type="password" class="form-control" id="userPassword" placeholder="Enter your Password" name="password">
               </div>
+
               <!-- <div class="form-group">
                 <label for="userPassword">Confirm Password:</label>
-                <input type="password" class="form-control" id="userPassword" placeholder="Enter your Password" name="">
+                <input type="password" class="form-control" id="userPassword" placeholder="Enter your Password" name="confirm">
               </div> -->
               <div class="form-group d-flex justify-content-end">
-                <button type="button" class="btn btn-primary">Register</button>
+                <button type="submit" class="btn btn-primary">Register</button>
               </div>
             </form>
           </div>
